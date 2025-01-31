@@ -1,0 +1,7 @@
+<img [src]="meal.thumb" [alt]="meal.name" />
+<p class="name">{{ meal.name }}</p>
+<div class="data">
+  <p class="country">{{ meal.area }}</p>
+  <p class="category">{{ meal.category }}</p>
+</div>
+<a class="button" (click)="navigateToDetail()">View recipe</a>

@@ -1,0 +1,35 @@
+:host {
+  background-color: var(--primary-color);
+  padding: 1rem;
+
+  h1 {
+    margin: 0;
+    color: var(--light-color);
+    text-shadow: 1px 1px 2px var(--dark-color);
+  }
+
+  nav {
+    padding: 0.5rem 2rem;
+
+    ul {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+
+      li {
+        a {
+          color: var(--light-color);
+          text-decoration: none;
+          margin-right: 15px;
+          font-weight: bold;
+        }
+
+        a:hover {
+          color: var(--accent-color);
+        }
+      }
+
+    }
+
+  }
+}

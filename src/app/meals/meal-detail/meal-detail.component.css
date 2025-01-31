@@ -1,0 +1,19 @@
+.details-wrapper {
+  margin-top: 3rem;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+
+  .ingredients,
+  .instructions {
+    padding: 1rem;
+    background-color: var(--light-color);
+    border: 1px solid var(--secondary-color);
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+    ul {
+      list-style: disc inside;
+    }
+  }
+}

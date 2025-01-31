@@ -1,1 +1,33 @@
-/* You can add global styles to this file, and also import other style files */
+:root {
+  --primary-color: #ff6f61;
+  --secondary-color: #42be48;
+  --accent-color: #ffc107;
+  --background-color: #eee;
+  --dark-color: #343a40;
+  --light-color: #f8f9fa;
+}
+
+body {
+  font-family: "Open Sans", sans-serif;
+  background-color: var(--background-color);
+  min-height: 100vh;
+
+  app-root {
+    min-height: 100vh;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+  }
+}
+
+main {
+  padding: 2rem;
+
+  background: linear-gradient(rgba(240, 245, 240, 0.8), rgba(240, 245, 240, 0.8)),
+    url("./assets/cooking-background.jpg") no-repeat center center/cover;
+
+  h2,
+  h3 {
+    color: var(--secondary-color)
+  }
+
+}
