@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { IIngredient, IMeal, IRawMeal, IRawMealResponse } from '../models/meal';
 
 @Injectable({
@@ -10,22 +10,36 @@ export class MealService {
   constructor(private http: HttpClient) {}
   BASE_URL = 'https://www.themealdb.com/api/json/v1/1/';
 
-  getMealsByInitial(initial = 'a'): Observable<IRawMealResponse> {
+  getMealsByInitial(initial = 'a'): Observable<IMeal[]> {
     const url = `${this.BASE_URL}search.php?f=${initial}`;
-    return this.http.get<IRawMealResponse>(url);
+    return this.http
+      .get<IRawMealResponse>(url)
+      .pipe(
+        map((response: IRawMealResponse) =>
+          response.meals?.map((rawMeal) => this.mapRowMeal(rawMeal))
+        )
+      );
   }
 
-  getRamdomMeal(): Observable<IRawMealResponse> {
+  getRamdomMeal(): Observable<IMeal> {
     const url = `${this.BASE_URL}random.php`;
-    return this.http.get<IRawMealResponse>(url);
+    return this.http
+      .get<IRawMealResponse>(url)
+      .pipe(
+        map((response: IRawMealResponse) => this.mapRowMeal(response.meals[0]))
+      );
   }
 
-  getMealByIde(id: number): Observable<IRawMealResponse> {
+  getMealById(id: number): Observable<IMeal> {
     const url = `${this.BASE_URL}lookup.php?i=${id}`;
-    return this.http.get<IRawMealResponse>(url);
+    return this.http
+      .get<IRawMealResponse>(url)
+      .pipe(
+        map((Response: IRawMealResponse) => this.mapRowMeal(Response.meals[0]))
+      );
   }
 
-  mapRowMeal(rMeal: IRawMeal): IMeal {
+  private mapRowMeal(rMeal: IRawMeal): IMeal {
     return {
       id: Number(rMeal.idMeal),
       name: rMeal.strMeal,

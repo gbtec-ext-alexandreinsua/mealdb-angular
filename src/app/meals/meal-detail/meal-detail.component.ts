@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { IMeal, IRawMealResponse } from 'src/app/models/meal';
+import { IMeal } from 'src/app/models/meal';
 import { MealService } from '../meal.service';
 
 @Component({
@@ -18,9 +18,9 @@ export class MealDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.mealService
-      .getMealByIde(this.route.snapshot.params['id'])
-      .subscribe((data: IRawMealResponse) => {
-        this.meal = this.mealService.mapRowMeal(data.meals[0]);
+      .getMealById(this.route.snapshot.params['id'])
+      .subscribe((data: IMeal) => {
+        this.meal = data;
       });
   }
 }

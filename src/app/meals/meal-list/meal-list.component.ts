@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { IMeal, IRawMeal } from 'src/app/models/meal';
+import { IMeal } from 'src/app/models/meal';
 import { MealService } from '../meal.service';
 
 @Component({
@@ -8,7 +8,7 @@ import { MealService } from '../meal.service';
   styleUrls: ['./meal-list.component.css'],
 })
 export class MealListComponent implements OnInit {
-  letters = 'ABCEDFGHIJKLMOPQRSTVWXYZ'.split('');
+  letters = 'ABCEDFGHIJKLMNOPQRSTVWXYZ'.split('');
   meals!: IMeal[];
 
   constructor(private mealsService: MealService) {}
@@ -18,10 +18,8 @@ export class MealListComponent implements OnInit {
   }
 
   getMealsByInitial(initial = 'A'): void {
-    this.mealsService.getMealsByInitial(initial).subscribe((data: any) => {
-      this.meals = data.meals?.map((rowMeal: IRawMeal) =>
-        this.mealsService.mapRowMeal(rowMeal)
-      );
+    this.mealsService.getMealsByInitial(initial).subscribe((data: IMeal[]) => {
+      this.meals = data;
     });
   }
 }

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MealService } from '../meals/meal.service';
-import { IMeal, IRawMealResponse } from '../models/meal';
+import { IMeal } from '../models/meal';
 
 @Component({
   selector: 'app-home',
@@ -13,8 +13,8 @@ export class HomeComponent implements OnInit {
   constructor(private mealService: MealService) {}
 
   ngOnInit(): void {
-    this.mealService.getRamdomMeal().subscribe((data: IRawMealResponse) => {
-      this.meal = this.mealService.mapRowMeal(data.meals[0]);
+    this.mealService.getRamdomMeal().subscribe((data: IMeal) => {
+      this.meal = data;
     });
   }
 }
