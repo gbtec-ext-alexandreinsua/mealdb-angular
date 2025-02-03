@@ -4,4 +4,15 @@
   <p class="country">{{ meal.area }}</p>
   <p class="category">{{ meal.category }}</p>
 </div>
-<a class="button" (click)="navigateToDetail()">View recipe</a>
+<div class="tags" *ngIf="fullView">
+  <p *ngFor="let t of meal.tags">
+    {{ t }}
+  </p>
+</div>
+<div class="buttons" *ngIf="fullView; else showNavigateToDetail">
+  <a [href]="meal.source" class="button">Source</a>
+  <a [href]="meal.youtube" class="button">Youtube</a>
+</div>
+<ng-template #showNavigateToDetail>
+  <a class="button standalone" (click)="navigateToDetail()">View recipe</a>
+</ng-template>

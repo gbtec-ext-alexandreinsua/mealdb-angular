@@ -1,1 +1,22 @@
-<p>meal-list works!</p>
+<h2>Meals</h2>
+<p>Click on a category to see all the meals:</p>
+<section class="letters">
+  <button
+    class="letter"
+    type="button"
+    *ngFor="let l of letters"
+    (click)="getMealsByInitial(l)"
+  >
+    {{ l }}
+  </button>
+</section>
+
+<section class="meals" *ngIf="meals?.length; else nomeals">
+  <app-meal-card *ngFor="let m of meals" [meal]="m"></app-meal-card>
+</section>
+
+<ng-template #nomeals>
+  <section class="no-meals .hidden">
+    <p>No meals found!</p>
+  </section>
+</ng-template>

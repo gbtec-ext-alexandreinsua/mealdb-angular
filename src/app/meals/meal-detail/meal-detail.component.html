@@ -1,5 +1,5 @@
 <div *ngIf="meal" class="details-wrapper">
-  <app-meal-card [meal]="meal"></app-meal-card>
+  <app-meal-card [meal]="meal" [fullView]="true"></app-meal-card>
   <app-meal-ingredients [ingredients]="meal.ingredients"></app-meal-ingredients>
   <app-meal-instructions
     [instructions]="meal.intructions"

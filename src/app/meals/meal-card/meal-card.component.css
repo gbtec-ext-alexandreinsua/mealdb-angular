@@ -40,8 +40,25 @@
     font-style: oblique;
   }
 
+  .tags {
+    display: flex;
+    gap: 1rem;
+    padding: 1rem 0;
+
+    p {
+      font-weight: bolder;
+      color: var(--primary-color);
+    }
+  }
+
+  .buttons {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+
+  }
+
   .button {
-    align-self: flex-end;
     padding: 8px 1.5rem;
     background-color: var(--secondary-color);
     color: #fff;
@@ -49,8 +66,12 @@
     border-radius: 4px;
     text-decoration: none;
     cursor: pointer;
-
   }
+
+  .button.standalone {
+    align-self: flex-end;
+  }
+
 
   .button:hover {
     background-color: var(--accent-color);

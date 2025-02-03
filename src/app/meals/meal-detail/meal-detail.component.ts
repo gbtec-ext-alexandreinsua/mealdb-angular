@@ -21,7 +21,6 @@ export class MealDetailComponent implements OnInit {
       .getMealByIde(this.route.snapshot.params['id'])
       .subscribe((data: IRawMealResponse) => {
         this.meal = this.mealService.mapRowMeal(data.meals[0]);
-        console.log(this.meal);
       });
   }
 }

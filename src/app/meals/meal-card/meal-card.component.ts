@@ -9,6 +9,7 @@ import { IMeal } from 'src/app/models/meal';
 })
 export class MealCardComponent {
   @Input() meal!: IMeal;
+  @Input() fullView = false;
 
   constructor(private router: Router) {}
 
