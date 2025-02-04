@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, Observable } from 'rxjs';
+import { map, Observable, tap } from 'rxjs';
 import { IIngredient, IMeal, IRawMeal, IRawMealResponse } from '../models/meal';
 
 @Injectable({
@@ -10,15 +10,21 @@ export class MealService {
   constructor(private http: HttpClient) {}
   BASE_URL = 'https://www.themealdb.com/api/json/v1/1/';
 
-  getMealsByInitial(initial = 'a'): Observable<IMeal[]> {
+  getMealsByInitial(initial = 'A'): Observable<IMeal[]> {
     const url = `${this.BASE_URL}search.php?f=${initial}`;
-    return this.http
-      .get<IRawMealResponse>(url)
-      .pipe(
-        map((response: IRawMealResponse) =>
-          response.meals?.map((rawMeal) => this.mapRowMeal(rawMeal))
+    return (
+      this.http
+        .get<IRawMealResponse>(url)
+        // pipe() es una función de la clase Observable que permite encadenar diferentes operadores
+        .pipe(
+          // tap es un operador de rxjs que permite espiar los valores que emite un observable.
+          tap(console.log),
+          // map es un operador de rxjs permite transformar un observable.
+          map((response: IRawMealResponse) =>
+            response.meals?.map((rawMeal) => this.mapRowMeal(rawMeal))
+          )
         )
-      );
+    );
   }
 
   getRamdomMeal(): Observable<IMeal> {
