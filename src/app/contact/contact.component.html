@@ -75,7 +75,7 @@
 
   <!-- Si el formulario no tiene los valores obligatorios podemos bloquear el botón submit -->
   <div class="buttons">
-    <button type="text" (click)="onCancel()">Cancel</button>
+    <button type="button" (click)="onCancel()">Cancel</button>
     <button [disabled]="contactForm.invalid" type="submit">Send</button>
   </div>
 </form>
