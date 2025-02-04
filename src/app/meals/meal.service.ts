@@ -20,7 +20,7 @@ export class MealService {
     return this.http.get<IRawMealResponse>(url);
   }
 
-  getMealByIde(id: number): Observable<IRawMealResponse> {
+  getMealById(id: number): Observable<IRawMealResponse> {
     const url = `${this.BASE_URL}lookup.php?i=${id}`;
     return this.http.get<IRawMealResponse>(url);
   }

@@ -18,7 +18,7 @@ export class MealDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.mealService
-      .getMealByIde(this.route.snapshot.params['id'])
+      .getMealById(this.route.snapshot.params['id'])
       .subscribe((data: IRawMealResponse) => {
         this.meal = this.mealService.mapRowMeal(data.meals[0]);
       });
