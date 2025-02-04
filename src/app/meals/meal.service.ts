@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { IIngredient, IMeal, IRawMeal, IRawMealResponse } from '../models/meal';
+import { mealResponseMock } from './meal-response.mock';
 
 @Injectable({
   providedIn: 'root',
@@ -22,7 +23,15 @@ export class MealService {
 
   getMealByIde(id: number): Observable<IRawMealResponse> {
     const url = `${this.BASE_URL}lookup.php?i=${id}`;
-    return this.http.get<IRawMealResponse>(url);
+    // return this.http.get<IRawMealResponse>(url);
+    // muestro la url para verificar que se recibe el parámetro:
+    console.log('MealService:getMealById:  ' + url);
+
+    // El operador of de rxjs crea un Observable que emite sincrónamente
+    // los argumentos que se le pasan como argumento.
+    // Una vez se han emitido todos los valores, se completa el Observable
+    // como la respuesta es muy grande la muevo a un fichero aparte
+    return of(mealResponseMock);
   }
 
   mapRowMeal(rMeal: IRawMeal): IMeal {
