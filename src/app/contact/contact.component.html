@@ -1,38 +1,56 @@
 <h2>Contact us</h2>
-<form (submit)="onSubmit()">
+
+<!-- La directiva formGroup enlaza todo el formulario con el modelo del controlador
+ Dentro del formuario, cada campo se enlazara con su propiedad del modelo con la
+ directiva formControlName (que substituye al ngModel)
+ Para el evento de submit se utiliza un evento propio de Angula ngSubmit
+
+ A los inputs obligatorios le voy a asignar una clase de css
+ en funcion de su estado
+ -->
+
+<form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
   <label for="name">Name*:</label>
   <input
+    [ngClass]="{ error: !isValid('name') }"
     type="text"
     id="name"
     name="name"
     placeholder="Your Full Name"
-    [(ngModel)]="name"
+    formControlName="name"
   />
-  <div class="error-hint name hidden">
+  <div *ngIf="!isValid('name')" class="error-hint name">
     <p>The name is required. Please fill it in.</p>
   </div>
 
   <label for="email">Email*:</label>
   <input
+    [ngClass]="{ error: !isValid('email') }"
     type="email"
     id="email"
     name="email"
     placeholder="Your Email Address"
-    [(ngModel)]="email"
+    formControlName="email"
   />
-  <div class="error-hint email hidden">
-    <p>The email is required. Please fill it in.</p>
+  <div *ngIf="!isValid('email')" class="error-hint email">
+    <p *ngIf="contactForm.get('email')?.hasError('required')">
+      The email is required. Please fill it in.
+    </p>
+    <p *ngIf="contactForm.get('email')?.hasError('email')">
+      Invalid email format. Please fix it.
+    </p>
   </div>
 
   <label for="subject">Subject*:</label>
   <input
+    [ngClass]="{ error: !isValid('subject') }"
     type="text"
     id="subject"
     name="subject"
     placeholder="Reason for Contacting"
-    [(ngModel)]="subject"
+    formControlName="subject"
   />
-  <div class="error-hint subject hidden">
+  <div *ngIf="!isValid('subject')" class="error-hint subject">
     <p>The subject is required. Please fill it in.</p>
   </div>
 
@@ -42,7 +60,7 @@
     name="message"
     rows="5"
     placeholder="Your Message or Questions"
-    [(ngModel)]="message"
+    formControlName="message"
   ></textarea>
 
   <label for="newsletter">
@@ -50,12 +68,14 @@
       type="checkbox"
       id="newsletter"
       name="newsletter"
-      [(ngModel)]="newsletter"
+      formControlName="newsletter"
     />
     Subscribe to our Newsletter
   </label>
+
+  <!-- Si el formulario no tiene los valores obligatorios podemos bloquear el botón submit -->
   <div class="buttons">
     <button type="text" (click)="onCancel()">Cancel</button>
-    <button type="submit">Send</button>
+    <button [disabled]="contactForm.invalid" type="submit">Send</button>
   </div>
 </form>

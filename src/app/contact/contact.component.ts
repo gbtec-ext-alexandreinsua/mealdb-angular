@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-contact',
@@ -8,87 +9,41 @@ import { Component } from '@angular/core';
 export class ContactComponent {
   $form: HTMLFormElement | null = document.querySelector('form');
 
-  name = '';
-  email = '';
-  subject = '';
-  message = '';
-  newsletter = false;
+  /*
+  Para poder implementar la funcionalidad con la tecnología de los Formularios reactivos
+  nesitamos crear un objeto que representa los datos y que se conoce como MODELO.
+  Vamos a agrupar los datos en un objecto completo, para lo que se crea un grupo de campos de formulario.
+  para crear un grupo, voy a usar una instancia del constructor de formularios.
+  Además, a estos campos se le puede agregar validaciones a través del objecto validators
+  */
+  constructor(private fb: FormBuilder) {}
+
+  contactForm = this.fb.group({
+    name: ['', [Validators.required]],
+    email: ['', [Validators.required, Validators.email]],
+    subject: ['', [Validators.required]],
+    message: [''],
+    newsletter: [''],
+  });
+
+  /* Este modelo se enlaza al html con las directivas formGrup para todo el formulario y formControlName para cada campo */
 
   htmlFieldClass = ['name', 'email', 'subject'];
 
   errors: string[] = [];
 
   onSubmit(): void {
-    this.errors = this.validateForm();
-
-    if (this.errors) {
-      console.error(
-        `Please fix the following errors:\n- ${this.errors.join('\n- ')}`
-      );
-    } else {
-      console.log(
-        JSON.stringify({
-          name: this.name,
-          email: this.email,
-          subject: this.subject,
-          message: this.message,
-          newsletter: this.newsletter,
-        })
-      );
-      this.$form?.reset();
-    }
+    console.log(this.contactForm.value);
   }
 
   onCancel(): void {
-    this.name = '';
-    this.email = '';
-    this.subject = '';
-    this.message = '';
-    this.newsletter = false;
+    this.contactForm.reset();
   }
 
-  // Función para validar el formato del email
-  private isValidEmail(email: string): boolean {
-    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    return emailRegex.test(email);
-  }
-
-  private validateForm(): string[] {
-    const vErrors: string[] = [];
-
-    //oculto mensajes de error
-    const $errorHints = document.querySelectorAll('.error-hint');
-    $errorHints.forEach((errorHint) => {
-      errorHint.classList.add('hidden');
-    });
-
-    this.htmlFieldClass.forEach((field) => {
-      if (field === 'email') {
-        if (!this.email.trim()) {
-          vErrors.push('Email is required.');
-          this.addErrorClasses(field);
-        } else if (!this.isValidEmail(this.email)) {
-          vErrors.push('Invalid email format.');
-          this.addErrorClasses(field);
-        }
-      }
-
-      if (field === 'name' && !this.name.trim()) {
-        this.addErrorClasses(field);
-        vErrors.push('Name is required.');
-      }
-
-      if (field === 'subject' && !this.subject.trim()) {
-        this.addErrorClasses(field);
-        vErrors.push('Subject is required.');
-      }
-    });
-
-    return vErrors;
-  }
-
-  private addErrorClasses(field: string): void {
-    document.querySelector(`input[id=${field}]`)?.classList.add('error');
-    document.querySelector('.error-hint.' + field)?.classList.remove('hidden');
+  isValid(field: string): boolean {
+    return !(
+      this.contactForm.get(field)?.invalid &&
+      this.contactForm.get(field)?.touched
+    );
   }
 }

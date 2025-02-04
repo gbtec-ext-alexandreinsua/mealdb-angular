@@ -59,6 +59,13 @@ form {
     background-color: var(--accent-color);
     color: var(--dark-color);
   }
+
+  button[disabled],
+  button[disabled]:hover {
+    background-color: gray;
+    color: var(--light-color);
+    cursor: not-allowed;
+  }
 }
 
 .error {
